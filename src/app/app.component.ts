@@ -65,6 +65,7 @@ export class AppComponent implements OnInit {
   }
 
   removeFromList(item: Item) {
+    item.quantity = 1;
     const index = _.findIndex(this.shoppingList.items, item);
     this.shoppingList.items.splice(index, 1);
     this.getTotal();
