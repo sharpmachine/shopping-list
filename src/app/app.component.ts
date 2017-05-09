@@ -16,7 +16,6 @@ import * as _ from 'lodash';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'app works!';
   items: Array<Item>;
   shoppingList = new Cart();
   total = 0;
