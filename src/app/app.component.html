@@ -55,7 +55,7 @@
     </div>
     <div class="col-sm-6">
       <p class="lead">Shopping List</p>
-      <div class="alert alert-info" *ngIf="shoppingList.items.length === 0">List is empty</div>
+      <div class="alert alert-info" *ngIf="shoppingList.items?.length === 0">List is empty</div>
       <ul class="list-group">
         <li *ngFor="let item of shoppingList.items" class="list-group-item justify-content-between">
 

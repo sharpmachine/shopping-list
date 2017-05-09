@@ -1,6 +1,6 @@
 import { Item } from './item';
 
-export class Cart {
+export class List {
     items: Array<Item>;
     total: number;
     tax: number;

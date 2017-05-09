@@ -1,10 +1,12 @@
-import { Cart } from './cart';
+import { ItemService } from './item.service';
+import { List } from './list';
 import { Item, Items } from './item';
 import { Component, OnInit } from '@angular/core';
 
 import * as _ from 'lodash';
 
 // TODO: Strikethrough when list item is checked
+// TODO: Only show actions on item hover
 
 @Component({
   selector: 'app-root',
@@ -13,11 +15,13 @@ import * as _ from 'lodash';
 })
 export class AppComponent implements OnInit {
   items: Array<Item>;
-  shoppingList = new Cart();
+  shoppingList = new List();
   total = 0;
 
+  constructor(private itemService: ItemService) { }
+
   ngOnInit() {
-    this.items = Items;
+    this.getItems();
     this.shoppingList.items = [];
   }
 
@@ -25,7 +29,9 @@ export class AppComponent implements OnInit {
   // Item methods
 
   getItems() {
-    // TODO: Get items
+    this.itemService
+      .getAll()
+      .subscribe(items => this.items = items);
   }
 
   createItem() {
