@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { Item } from './item';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
@@ -7,8 +8,7 @@ import { Http } from '@angular/http';
 
 @Injectable()
 export class ItemService {
-  // api = 'http://localhost:3000/items';
-  api = '/items';
+  api = `${environment.api ? environment.api : ''}/items`;
 
   constructor(private http: Http) { }
 
