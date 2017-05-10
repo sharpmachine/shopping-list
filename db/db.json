@@ -15,25 +15,10 @@
       "quantity": 1
     },
     {
-      "name": "Butter",
+      "id": 3,
+      "name": "Butterz",
       "price": "2.75",
-      "isPriceEstimate": false,
-      "quantity": 1,
-      "id": 3
-    },
-    {
-      "id": 4,
-      "name": "Hello",
-      "price": "1",
-      "isPriceEstimate": false,
-      "quantity": 1
-    },
-    {
-      "id": 5,
-      "name": "Lettuce",
-      "price": "12.72",
-      "isPriceEstimate": false,
-      "quantity": 1
+      "isPriceEstimate": false
     }
   ]
 }

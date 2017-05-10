@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
       price: ['', Validators.required],
       isPriceEstimate: [false]
     });
-
   }
 
 
@@ -75,9 +74,13 @@ export class AppComponent implements OnInit {
 
   deleteItem(item: Item) {
     if (window.confirm('Are you sure?')) {
+
+      const index = _.findIndex(this.items, item);
+      this.items.splice(index, 1);
+
       this.itemService
         .delete(item.id)
-        .then(() => this.items = this.items.filter(i => i !== item));
+        .then(null, () => this.items.splice(index, 1, item));
     }
   }
 
