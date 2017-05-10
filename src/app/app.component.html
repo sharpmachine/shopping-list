@@ -58,7 +58,7 @@
       <p class="lead">{{isEditMode ? 'Update' : 'Add'}} Item</p>
       
       <div class="card">
-        <form novalidate class="card-block" (ngSubmit)="onSubmit(item)" [formGroup]="item">
+        <form autocomplete="off" novalidate class="card-block" (ngSubmit)="onSubmit(item)" [formGroup]="item">
 
           <div class="form-group">
             <label for="name">Name</label>

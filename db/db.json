@@ -27,6 +27,13 @@
       "price": "1",
       "isPriceEstimate": false,
       "quantity": 1
+    },
+    {
+      "id": 5,
+      "name": "Lettuce",
+      "price": "12.72",
+      "isPriceEstimate": false,
+      "quantity": 1
     }
   ]
 }
