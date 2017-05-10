@@ -2,3 +2,9 @@
 .container-fluid {
   padding-top: 30px;
 }
+
+.form-control+.input-group-addon {
+  label {
+    margin-bottom: 0;
+  }
+}

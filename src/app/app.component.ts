@@ -1,12 +1,16 @@
+import { Observable } from 'rxjs/Observable';
 import { ItemService } from './item.service';
 import { List } from './list';
-import { Item, Items } from './item';
+import { Item } from './item';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import * as _ from 'lodash';
 
 // TODO: Strikethrough when list item is checked
 // TODO: Only show actions on item hover
+// TODO: Form validation
+// TODO: Unit tests
 
 @Component({
   selector: 'app-root',
@@ -14,15 +18,28 @@ import * as _ from 'lodash';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  item: FormGroup;
   items: Array<Item>;
   shoppingList = new List();
   total = 0;
+  isEditMode = false;
 
-  constructor(private itemService: ItemService) { }
+  constructor(
+    private itemService: ItemService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.getItems();
     this.shoppingList.items = [];
+
+    this.item = this.fb.group({
+      id: [null],
+      name: ['', Validators.required],
+      price: ['', Validators.required],
+      isPriceEstimate: [false]
+    });
+
   }
 
 
@@ -31,19 +48,53 @@ export class AppComponent implements OnInit {
   getItems() {
     this.itemService
       .getAll()
-      .subscribe(items => this.items = items);
+      .then(items => this.items = items);
   }
 
-  createItem() {
-    // TODO: Create item
+  createItem(item: Item) {
+    item.quantity = 1;
+    this.itemService
+      .create(item)
+      .then(newItem => {
+        this.items.push(newItem);
+        this.item.reset();
+      });
   }
 
-  updateItem() {
-    // TODO: Update item
+  updateItem(item: Item) {
+    const index = _.findIndex(this.items, item);
+
+    this.itemService
+      .update(item)
+      .then(updatedItem => {
+        this.items.splice(index, 1, updatedItem);
+        this.isEditMode = false;
+        this.item.reset();
+      });
   }
 
-  deleteItem() {
-    // TODO: Delete item
+  deleteItem(item: Item) {
+    if (window.confirm('Are you sure?')) {
+      this.itemService
+        .delete(item.id)
+        .then(() => this.items = this.items.filter(i => i !== item));
+    }
+  }
+
+  editMode(item: Item) {
+    this.isEditMode = true;
+    this.item.patchValue(item);
+  }
+
+  onSubmit({ value, valid }: { value: Item, valid: boolean }, ) {
+    if (valid) {
+      this.isEditMode ? this.updateItem(value) : this.createItem(value);
+    }
+  }
+
+  cancel() {
+    this.item.reset();
+    this.isEditMode = false;
   }
 
 
