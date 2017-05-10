@@ -8,7 +8,7 @@ import { Http } from '@angular/http';
 @Injectable()
 export class ItemService {
   // api = 'http://localhost:3000/items';
-  api = '';
+  api = '/items';
 
   constructor(private http: Http) { }
 
