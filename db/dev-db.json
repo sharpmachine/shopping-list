@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Pizza Pie",
+      "price": 1.35,
+      "isPriceEstimate": false,
+      "quantity": 1
+    },
+    {
+      "id": 2,
+      "name": "Peanut Butter",
+      "price": 2,
+      "isPriceEstimate": true,
+      "quantity": 1
+    },
+    {
+      "id": 3,
+      "name": "Lettuce",
+      "price": "12.00",
+      "isPriceEstimate": false,
+      "quantity": 1
+    },
+    {
+      "id": 4,
+      "name": "Pretzels",
+      "price": "12",
+      "isPriceEstimate": false,
+      "quantity": 1
+    }
+  ],
+  "lists": [
+    {
+      "id": 1,
+      "items": [
+        {
+          "id": 3,
+          "name": "Lettuce",
+          "price": "12.00",
+          "isPriceEstimate": false,
+          "quantity": 4
+        },
+        {
+          "id": 2,
+          "name": "Peanut Butter",
+          "price": 2,
+          "isPriceEstimate": true,
+          "quantity": 2
+        },
+        {
+          "id": 1,
+          "name": "Pizza Pie",
+          "price": 1.35,
+          "isPriceEstimate": false,
+          "quantity": 1
+        },
+        {
+          "id": 4,
+          "name": "Pretzels",
+          "price": "12",
+          "isPriceEstimate": false,
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}
