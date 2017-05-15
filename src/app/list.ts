@@ -1,8 +1,6 @@
 import { Item } from './item';
 
 export class List {
+    id: number;
     items: Array<Item>;
-    total: number;
-    tax: number;
-    grandTotal: number;
 };

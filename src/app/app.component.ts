@@ -1,3 +1,4 @@
+import { ListServiceService } from './list-service.service';
 import { Observable } from 'rxjs/Observable';
 import { ItemService } from './item.service';
 import { List } from './list';
@@ -21,17 +22,19 @@ export class AppComponent implements OnInit {
   item: FormGroup;
   items: Array<Item>;
   shoppingList = new List();
+  shoppingListId = 1;
   total = 0;
   isEditMode = false;
 
   constructor(
     private itemService: ItemService,
+    private listService: ListServiceService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
     this.getItems();
-    this.shoppingList.items = [];
+    this.getList(this.shoppingListId);
 
     this.item = this.fb.group({
       id: [null],
@@ -119,17 +122,26 @@ export class AppComponent implements OnInit {
     }
 
     this.getTotal();
+    this.updateList(this.shoppingList);
   }
 
 
   // List methods
 
-  getList() {
-    // TODO: Get List
+  getList(id: number) {
+    this.listService.get(1)
+      .then(list => {
+        this.shoppingList = list;
+        this.getTotal();
+      },
+      () => this.shoppingList.items = []);
   }
 
-  updateList() {
+  updateList(list: List) {
     // TODO: Save list when item is added, removed or quantity changes
+    this.listService
+      .update(list)
+      .then(() => this.getList(list.id));
   }
 
   clearList() {
@@ -147,6 +159,7 @@ export class AppComponent implements OnInit {
   increaseQty(item: Item) {
     item.quantity = item.quantity + 1;
     this.getTotal();
+    this.updateList(this.shoppingList);
   }
 
 
@@ -161,6 +174,7 @@ export class AppComponent implements OnInit {
     if (item.quantity > 1) {
       item.quantity = item.quantity - 1;
       this.getTotal();
+      this.updateList(this.shoppingList);
     }
   }
 
@@ -177,6 +191,7 @@ export class AppComponent implements OnInit {
     const index = _.findIndex(this.shoppingList.items, item);
     this.shoppingList.items.splice(index, 1);
     this.getTotal();
+    this.updateList(this.shoppingList);
   }
 
 

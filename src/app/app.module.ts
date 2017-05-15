@@ -1,3 +1,4 @@
+import { ListServiceService } from './list-service.service';
 import { ItemService } from './item.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -17,7 +18,7 @@ import { AppComponent } from './app.component';
     HttpModule,
     ReactiveFormsModule
   ],
-  providers: [ItemService],
+  providers: [ItemService, ListServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
