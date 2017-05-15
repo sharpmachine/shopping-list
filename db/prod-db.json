@@ -1,4 +1,7 @@
 {
   "items": [],
-  "lists": []
+  "lists": [{
+    "id": 1,
+    "items": []
+  }]
 }
