@@ -8,7 +8,7 @@ import { Http } from '@angular/http';
 
 @Injectable()
 export class ItemService {
-  api = `${environment.api ? environment.api : ''}/items`;
+  api = `${environment.api}/items`;
 
   constructor(private http: Http) { }
 

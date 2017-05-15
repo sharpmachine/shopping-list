@@ -5,7 +5,7 @@ import { environment } from './../environments/environment';
 
 @Injectable()
 export class ListServiceService {
-  private api = `${environment.api ? environment.api : ''}/lists`;
+  private api = `${environment.api}/lists`;
 
   constructor(private http: Http) { }
 
