@@ -25,7 +25,22 @@
   "lists": [
     {
       "id": 1,
-      "items": []
+      "items": [
+        {
+          "id": 2,
+          "name": "Peanut Butter",
+          "price": 2,
+          "isPriceEstimate": true,
+          "quantity": 1
+        },
+        {
+          "id": 3,
+          "name": "Lettuce",
+          "price": "12.00",
+          "isPriceEstimate": false,
+          "quantity": 1
+        }
+      ]
     }
   ]
 }

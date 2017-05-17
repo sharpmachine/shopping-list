@@ -145,7 +145,8 @@ export class AppComponent implements OnInit {
   updateList(list: List) {
     this.listService
       .update(list)
-      .then(() => this.getList(list.id));
+      .then(() => this.getList(list.id),
+      () => this.getList(list.id));
   }
 
   clearList(list: List) {
