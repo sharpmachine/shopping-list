@@ -114,6 +114,7 @@
           </div>
         </li>
       </ul>
+      <button *ngIf="shoppingList.items?.length" class="btn btn-link text-warning pull-right" (click)="clearList(shoppingList)">Clear List</button>
     </div>
   </div>
 </div>

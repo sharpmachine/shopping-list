@@ -138,14 +138,16 @@ export class AppComponent implements OnInit {
   }
 
   updateList(list: List) {
-    // TODO: Save list when item is added, removed or quantity changes
     this.listService
       .update(list)
       .then(() => this.getList(list.id));
   }
 
-  clearList() {
-    // TODO: Reset list
+  clearList(list: List) {
+    if (window.confirm('Are you sure?')) {
+      list.items = [];
+      this.updateList(list);
+    }
   }
 
 
