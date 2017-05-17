@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 // TODO: Only show actions on item hover
 // TODO: Form validation
 // TODO: Unit tests
+// TODO: Add currency pipe to price input
 
 @Component({
   selector: 'app-root',
