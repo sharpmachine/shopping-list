@@ -36,50 +36,88 @@ export class AppComponent implements OnInit {
     this.getItems();
     this.getList(this.shoppingListId);
 
+    // Item form
     this.item = this.fb.group({
       id: [null],
       name: ['', Validators.required],
       price: ['', Validators.required],
-      isPriceEstimate: [false]
+      isPriceEstimate: [false],
+      quantity: [1]
     });
   }
 
 
-  // Item methods
+  // ITEM METHODS
 
+
+  /**
+   * @description Gets a list of items from API
+   *
+   *
+   * @memberof AppComponent
+   */
   getItems() {
     this.itemService
       .getAll()
       .then(items => this.items = items);
   }
 
+
+  /**
+   * @description Creates new item
+   *
+   * @param {Item} item
+   *
+   * @memberof AppComponent
+   */
   createItem(item: Item) {
-    item.quantity = 1;
+    this.items.push(item);
+
     this.itemService
       .create(item)
       .then(newItem => {
-        this.items.push(newItem);
         this.item.reset();
+      }, () => {
+        _.pull(this.items, item);
       });
   }
 
+
+  /**
+   * @description Updates an exisiting item
+   *
+   * @param {Item} item
+   *
+   * @memberof AppComponent
+   */
   updateItem(item: Item) {
-    const index = _.findIndex(this.items, item);
+    const currentItem = _.find(this.items, { 'id': item.id });
+    const index = _.findIndex(this.items, currentItem);
+    this.items.splice(index, 1, item);
 
     this.itemService
       .update(item)
       .then(updatedItem => {
-        this.items.splice(index, 1, updatedItem);
         this.isEditMode = false;
         this.item.reset();
+      }, () => {
+        this.items.splice(index, 1, currentItem);
       });
   }
 
+
+  /**
+   * @description Deletes an existing item
+   *
+   * @param {Item} item
+   *
+   * @memberof AppComponent
+   */
   deleteItem(item: Item) {
     if (window.confirm('Are you sure?')) {
 
       const index = _.findIndex(this.items, item);
-      this.items.splice(index, 1);
+      _.pull(this.items, item);
 
       this.itemService
         .delete(item.id)
@@ -87,17 +125,40 @@ export class AppComponent implements OnInit {
     }
   }
 
+
+  /**
+   * @description Puts the form in edit mode and loads selected item into form
+   *
+   * @param {Item} item
+   *
+   * @memberof AppComponent
+   */
   editMode(item: Item) {
     this.isEditMode = true;
     this.item.patchValue(item);
   }
 
+
+  /**
+   * @description Routes to the appropriate action when submitting the item form
+   *
+   * @param {{ value: Item, valid: boolean }} { value, valid }
+   *
+   * @memberof AppComponent
+   */
   onSubmit({ value, valid }: { value: Item, valid: boolean }, ) {
     if (valid) {
       this.isEditMode ? this.updateItem(value) : this.createItem(value);
     }
   }
 
+
+  /**
+   * @description Cancels creating or editing an item
+   *
+   *
+   * @memberof AppComponent
+   */
   cancel() {
     this.item.reset();
     this.isEditMode = false;
@@ -105,7 +166,7 @@ export class AppComponent implements OnInit {
 
 
   /**
-   * @description Add an item to a list
+   * @description Adds an item to a list
    *
    * @param {Item} item
    *
@@ -126,8 +187,16 @@ export class AppComponent implements OnInit {
   }
 
 
-  // List methods
+  // LIST METHODS
 
+
+  /**
+   * @description Gets shopping list from API
+   *
+   * @param {number} id
+   *
+   * @memberof AppComponent
+   */
   getList(id: number) {
     this.listService.get(1)
       .then(list => {
@@ -137,20 +206,39 @@ export class AppComponent implements OnInit {
       () => this.shoppingList.items = []);
   }
 
+
+  /**
+   * @description Updates the list
+   *
+   * @param {List} list
+   *
+   * @memberof AppComponent
+   */
   updateList(list: List) {
-    // TODO: Save list when item is added, removed or quantity changes
     this.listService
       .update(list)
-      .then(() => this.getList(list.id));
-  }
-
-  clearList() {
-    // TODO: Reset list
+      .then(() => this.getList(list.id),
+      () => this.getList(list.id));
   }
 
 
   /**
-   * @description Increase quantity of a list item
+   * @description Resets the list with zero items in it
+   *
+   * @param {List} list
+   *
+   * @memberof AppComponent
+   */
+  clearList(list: List) {
+    if (window.confirm('Are you sure?')) {
+      list.items = [];
+      this.updateList(list);
+    }
+  }
+
+
+  /**
+   * @description Increases quantity of a list item
    *
    * @param {Item} item
    *
@@ -164,7 +252,7 @@ export class AppComponent implements OnInit {
 
 
   /**
-   * @description descrease quantity of a list item
+   * @description Descreases quantity of a list item
    *
    * @param {Item} item
    *
@@ -180,7 +268,7 @@ export class AppComponent implements OnInit {
 
 
   /**
-   * @description remove an item from the list
+   * @description Removes an item from the list
    *
    * @param {Item} item
    *
@@ -196,7 +284,7 @@ export class AppComponent implements OnInit {
 
 
   /**
-   * @description get cost totals
+   * @description Gets cost totals
    *
    * @private
    *
