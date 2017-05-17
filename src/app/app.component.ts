@@ -64,14 +64,17 @@ export class AppComponent implements OnInit {
   }
 
   updateItem(item: Item) {
-    const index = _.findIndex(this.items, item);
+    const currentItem = _.find(this.items, { 'id': item.id });
+    const index = _.findIndex(this.items, currentItem);
+    this.items.splice(index, 1, item);
 
     this.itemService
       .update(item)
       .then(updatedItem => {
-        this.items.splice(index, 1, updatedItem);
         this.isEditMode = false;
         this.item.reset();
+      }, () => {
+        this.items.splice(index, 1, currentItem);
       });
   }
 
@@ -102,7 +105,6 @@ export class AppComponent implements OnInit {
     this.item.reset();
     this.isEditMode = false;
   }
-
 
   /**
    * @description Add an item to a list
@@ -150,7 +152,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-
   /**
    * @description Increase quantity of a list item
    *
@@ -163,7 +164,6 @@ export class AppComponent implements OnInit {
     this.getTotal();
     this.updateList(this.shoppingList);
   }
-
 
   /**
    * @description descrease quantity of a list item
@@ -180,7 +180,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-
   /**
    * @description remove an item from the list
    *
@@ -195,7 +194,6 @@ export class AppComponent implements OnInit {
     this.getTotal();
     this.updateList(this.shoppingList);
   }
-
 
   /**
    * @description get cost totals
