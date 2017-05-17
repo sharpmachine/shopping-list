@@ -55,11 +55,14 @@ export class AppComponent implements OnInit {
 
   createItem(item: Item) {
     item.quantity = 1;
+    this.items.push(item);
+
     this.itemService
       .create(item)
       .then(newItem => {
-        this.items.push(newItem);
         this.item.reset();
+      }, () => {
+        _.pull(this.items, item);
       });
   }
 
@@ -82,7 +85,7 @@ export class AppComponent implements OnInit {
     if (window.confirm('Are you sure?')) {
 
       const index = _.findIndex(this.items, item);
-      this.items.splice(index, 1);
+      _.pull(this.items, item);
 
       this.itemService
         .delete(item.id)

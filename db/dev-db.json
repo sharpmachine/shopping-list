@@ -20,12 +20,6 @@
       "price": "12.00",
       "isPriceEstimate": false,
       "quantity": 1
-    },
-    {
-      "id": 4,
-      "name": "Pretzels",
-      "price": "12",
-      "isPriceEstimate": false
     }
   ],
   "lists": [
