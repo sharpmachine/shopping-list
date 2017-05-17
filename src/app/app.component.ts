@@ -36,11 +36,13 @@ export class AppComponent implements OnInit {
     this.getItems();
     this.getList(this.shoppingListId);
 
+    // Item form
     this.item = this.fb.group({
       id: [null],
       name: ['', Validators.required],
       price: ['', Validators.required],
-      isPriceEstimate: [false]
+      isPriceEstimate: [false],
+      quantity: [1]
     });
   }
 
@@ -54,7 +56,6 @@ export class AppComponent implements OnInit {
   }
 
   createItem(item: Item) {
-    item.quantity = 1;
     this.items.push(item);
 
     this.itemService
