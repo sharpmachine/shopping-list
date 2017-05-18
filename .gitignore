@@ -32,7 +32,6 @@
 npm-debug.log
 testem.log
 /typings
-/db/prod-db.json
 
 # e2e
 /e2e/*.js
