@@ -1,35 +1,67 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var mongodb = require('mongodb');
-var mongoose = require('mongoose');
-var ObjectID = mongodb.ObjectID;
+const express = require('express');
+const path = require('path');
+const http = require('http');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
 require('dotenv').config();
 
-var CONTACTS_COLLECTION = 'contacts';
+const api = require('./server/routes/api');
+const items = require('./server/routes/items');
 
-var app = express();
+const app = express();
+
+// Parsers for POST data
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
-// mongoose.connect(process.env.MONGODB_URI);
+// Point static path to dist
+app.use(express.static(path.join(__dirname, 'dist')));
 
-// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
-var db;
+// Add headers
+app.use(function (req, res, next) {
 
-// Connect to the database before starting the application server.
-mongoose.connect(process.env.MONGODB_URI, function (err, database) {
-  if (err) {
-    console.log(err);
-    process.exit(1);
-  }
-  // Save database object from the callback for reuse.
-  db = database;
-  console.log('Database connection ready');
+  // URL to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
 
-  // Initialize the app.
-  var server = app.listen(process.env.PORT || 8080, function () {
-    var port = server.address().port;
-    console.log('App now running on port', port);
-  });
+  // Request methods to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  // Include cookies in requests
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
 });
 
-// CONTACTS API ROUTES BELOW
+// Set our api routes
+app.use('/api', api);
+app.use('/api/', items);
+
+mongoose.connect(process.env.MONGODB_URI);
+
+// Catch all other routes and return the index file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
+/**
+ * Get port from environment and store in Express.
+ */
+const port = process.env.PORT || '3000';
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+const server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+server.listen(port, () => console.log(`API running on localhost:${port}`));
