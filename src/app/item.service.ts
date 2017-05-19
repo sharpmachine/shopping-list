@@ -28,7 +28,7 @@ export class ItemService {
 
   update(item: Item): Promise<Item> {
     return this.http
-      .put(`${this.api}/${item.id}`, item)
+      .put(`${this.api}/${item._id}`, item)
       .toPromise()
       .then(response => response.json());
   }

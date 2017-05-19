@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
 
     // Item form
     this.item = this.fb.group({
-      id: [null],
+      _id: [null],
       name: ['', Validators.required],
       price: ['', Validators.required],
       isPriceEstimate: [false],
@@ -92,7 +92,7 @@ export class AppComponent implements OnInit {
    * @memberof AppComponent
    */
   updateItem(item: Item) {
-    const currentItem = _.find(this.items, { 'id': item.id });
+    const currentItem = _.find(this.items, { '_id': item._id });
     const index = _.findIndex(this.items, currentItem);
     this.items.splice(index, 1, item);
 
@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
       _.pull(this.items, item);
 
       this.itemService
-        .delete(item.id)
+        .delete(item._id)
         .then(null, () => this.items.splice(index, 1, item));
     }
   }
