@@ -9,23 +9,24 @@ export class ListServiceService {
 
   constructor(private http: Http) { }
 
-  get(id: number): Promise<List> {
+  getAll(): Promise<Array<List>> {
+    return this.http
+      .get(`${this.api}`)
+      .toPromise()
+      .then(response => response.json());
+  }
+
+  get(id: string): Promise<List> {
     return this.http
       .get(`${this.api}/${id}`)
       .toPromise()
       .then(response => response.json());
   }
 
-  create(list: List): Promise<List> {
-    return this.http
-      .post(`${this.api}`, list)
-      .toPromise()
-      .then(response => response.json());
-  }
-
+  // Will upsert if list doesn't exist yet
   update(list: List): Promise<List> {
     return this.http
-      .put(`${this.api}/${list.id}`, list)
+      .post(`${this.api}`, list)
       .toPromise()
       .then(response => response.json());
   }
