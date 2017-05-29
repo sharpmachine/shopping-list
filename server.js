@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const api = require('./server/routes/api');
 const items = require('./server/routes/items');
+const lists = require('./server/routes/lists');
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(function (req, res, next) {
 // Set our api routes
 app.use('/api', api);
 app.use('/api/', items);
+app.use('/api/', lists);
 
 mongoose.connect(process.env.MONGODB_URI);
 

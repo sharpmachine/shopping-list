@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 // TODO: Form validation
 // TODO: Unit tests
 // TODO: Add currency pipe to price input
+// TODO: Create relationship between items and lists
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,6 @@ export class AppComponent implements OnInit {
   item: FormGroup;
   items: Array<Item>;
   shoppingList = new List();
-  shoppingListId = 1;
   total = 0;
   isEditMode = false;
 
@@ -35,7 +35,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.getItems();
-    this.getList(this.shoppingListId);
+    this.listService
+      .getAll()
+      .then(lists => {
+        if (lists.length > 0) {
+          this.shoppingList = lists[0];
+          this.getTotal();
+        } else {
+          this.shoppingList.items = [];
+        }
+      });
+
 
     // Item form
     this.item = this.fb.group({
@@ -198,9 +208,11 @@ export class AppComponent implements OnInit {
    *
    * @memberof AppComponent
    */
-  getList(id: number) {
-    this.listService.get(1)
+  getList(id: string) {
+    console.log(id);
+    this.listService.get(id)
       .then(list => {
+        console.log('list: ', list);
         this.shoppingList = list;
         this.getTotal();
       },
@@ -218,8 +230,8 @@ export class AppComponent implements OnInit {
   updateList(list: List) {
     this.listService
       .update(list)
-      .then(() => this.getList(list.id),
-      () => this.getList(list.id));
+      .then(newList => this.getList(newList._id),
+      () => this.getList(list._id));
   }
 
 

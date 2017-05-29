@@ -1,6 +1,7 @@
 import { Item } from './item';
 
 export class List {
-    id: number;
+    _id: string;
+    name: string;
     items: Array<Item>;
 };
