@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use(function (req, res, next) {
 
   // URL to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200' || 'https://grosh-list.herokuapp.com/');
 
   res.setHeader('Content-Type', 'application/json');
 
