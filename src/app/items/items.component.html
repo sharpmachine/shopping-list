@@ -1,0 +1,52 @@
+<p class="lead">Items</p>
+<div class="alert alert-info" *ngIf="items?.length === 0">No items yet.</div>
+<ul class="list-group">
+  <li *ngFor="let item of items" class="list-group-item justify-content-between" [class.list-group-item-warning]="item.isPriceEstimate">
+    <div>
+      {{item.name}} @ ${{item.price}}
+      <span *ngIf="item.isPriceEstimate" class="badge badge-warning badge-pill">Estimate</span>
+    </div>
+    <div>
+      <button (click)="editMode(item)" class="btn btn-link">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+      </button>
+      <button (click)="deleteItem(item); $event.stopPropagation()" class="btn btn-link">
+        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+      </button>
+    </div>
+    <button class="btn btn-link text-success" (click)="addItemToShoppingList(item)">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    </button>
+  </li>
+</ul>
+
+<hr>
+
+<p class="lead">{{isEditMode ? 'Update' : 'Add'}} Item</p>
+
+<div class="card">
+  <form autocomplete="off" novalidate class="card-block" (ngSubmit)="onSubmit(item)" [formGroup]="item">
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" class="form-control" placeholder="Item name" formControlName="name">
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price</label>
+      <div class="input-group">
+        <div class="input-group-addon">$</div>
+        <input type="text" id="price" class="form-control" placeholder="How much does it cost?" formControlName="price">
+        <div class="input-group-addon">
+          <label>
+            <input type="checkbox" formControlName="isPriceEstimate"> Estimate
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="item.invalid">{{isEditMode ? 'Update' : 'Create'}} Item</button>
+    <button class="btn btn-link text-danger pull-right" (click)="cancel()">Cancel</button>
+
+  </form>
+</div>

@@ -7,10 +7,14 @@ import { HttpModule } from '@angular/http';
 import './rxjs-operators';
 
 import { AppComponent } from './app.component';
+import { ItemsComponent } from './items/items.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ItemsComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
