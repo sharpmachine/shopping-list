@@ -1,0 +1,36 @@
+<p class="lead">Shopping List</p>
+<div class="alert alert-info" *ngIf="list?.items?.length === 0">List is empty</div>
+<ul class="list-group">
+  <li *ngFor="let item of list?.items" class="list-group-item justify-content-between">
+
+    <span class="item-details">
+      <input type="checkbox"> 
+      {{item.name}} @ {{item.price | currency:'USD':true}} &times; {{item.quantity}} 
+      <button (click)="increaseQty(item)" class="btn btn-link">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i> 
+      </button>
+
+      <button (click)="decreaseQty(item)" class="btn btn-link" [disabled]="item.quantity === 1">
+        <i class="fa fa-minus-circle" aria-hidden="true"></i>
+      </button>
+    </span>
+
+    <span>
+      {{item.price * item.quantity  | currency:'USD':true }} 
+      <button (click)="removeFromList(item)" class="btn btn-link text-danger">
+        <i class="fa fa-times-circle" aria-hidden="true"></i>
+      </button>
+    </span>
+
+  </li>
+  <li class="list-group-item list-group-item-success flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <span>TOTAL: {{total | currency:'USD':true}}</span>
+      <span>TAX (10%): {{total * 0.1 | currency:'USD':true}}</span>
+      <span>
+        <strong>GRAND TOTAL: {{total + (total * 0.1) | currency:'USD':true}}</strong>
+      </span>
+    </div>
+  </li>
+</ul>
+<button *ngIf="list?.items?.length" class="btn btn-link text-warning pull-right" (click)="clearList(list)">Clear List</button>

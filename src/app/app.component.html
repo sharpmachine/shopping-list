@@ -1,21 +1,32 @@
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
-  <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"
-    data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+  <button aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          class="navbar-toggler navbar-toggler-right"
+          data-target="#navbarSupportedContent"
+          data-toggle="collapse"
+          type="button">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">Grosh List</a>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <!--<ul class="navbar-nav mr-auto">
+  <a class="navbar-brand"
+     href="#">Grosh List</a>
+  <div class="collapse navbar-collapse"
+       id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link"
+           href="#">Shopping List 
+        <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link"
+           href="#">Meals</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link"
+           href="#">Items</a>
       </li>
-    </ul>-->
+    </ul>
     <!--<form class="form-inline my-2 my-lg-0 pull-right">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -25,45 +36,10 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-6">
-      <app-items [list]="shoppingList" (updateList)="updateList(shoppingList)"></app-items>
+      <app-items></app-items>
     </div>
     <div class="col-sm-6">
-      <p class="lead">Shopping List</p>
-      <div class="alert alert-info" *ngIf="shoppingList?.items?.length === 0">List is empty</div>
-      <ul class="list-group">
-        <li *ngFor="let item of shoppingList?.items" class="list-group-item justify-content-between">
-
-          <span class="item-details">
-            <input type="checkbox"> 
-            {{item.name}} @ {{item.price | currency:'USD':true}} &times; {{item.quantity}} 
-            <button (click)="increaseQty(item)" class="btn btn-link">
-              <i class="fa fa-plus-circle" aria-hidden="true"></i> 
-            </button>
-
-            <button (click)="decreaseQty(item)" class="btn btn-link" [disabled]="item.quantity === 1">
-              <i class="fa fa-minus-circle" aria-hidden="true"></i>
-            </button>
-          </span>
-
-          <span>
-            {{item.price * item.quantity  | currency:'USD':true }} 
-            <button (click)="removeFromList(item)" class="btn btn-link text-danger">
-              <i class="fa fa-times-circle" aria-hidden="true"></i>
-            </button>
-          </span>
-
-        </li>
-        <li class="list-group-item list-group-item-success flex-column align-items-start">
-          <div class="d-flex w-100 justify-content-between">
-            <span>TOTAL: {{total | currency:'USD':true}}</span>
-            <span>TAX (10%): {{total * 0.1 | currency:'USD':true}}</span>
-            <span>
-              <strong>GRAND TOTAL: {{total + (total * 0.1) | currency:'USD':true}}</strong>
-            </span>
-          </div>
-        </li>
-      </ul>
-      <button *ngIf="shoppingList?.items?.length" class="btn btn-link text-warning pull-right" (click)="clearList(shoppingList)">Clear List</button>
+      <app-list></app-list>
     </div>
   </div>
 </div>

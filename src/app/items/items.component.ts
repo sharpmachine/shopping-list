@@ -32,7 +32,6 @@ export class ItemsComponent implements OnInit {
   ngOnInit() {
     this.getItems();
 
-
     // Item form
     this.item = this.fb.group({
       _id: [null],
