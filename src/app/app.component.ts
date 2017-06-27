@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   shoppingList = new List();
   total = 0;
   isEditMode = false;
+  itemFilter: any = { name: '' };
 
   constructor(
     private itemService: ItemService,
