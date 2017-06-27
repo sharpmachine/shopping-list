@@ -26,9 +26,12 @@
   <div class="row">
     <div class="col-sm-6">
       <p class="lead">Items</p>
+      <div class="form-group">
+        <input type="text" [(ngModel)]="itemFilter.name" class="form-control" placeholder="Search for an item …">
+      </div>
       <div class="alert alert-info" *ngIf="items?.length === 0">No items yet.</div>
       <ul class="list-group">
-        <li *ngFor="let item of items" class="list-group-item justify-content-between" [class.list-group-item-warning]="item.isPriceEstimate">
+        <li *ngFor="let item of items | filterBy: itemFilter" class="list-group-item justify-content-between" [class.list-group-item-warning]="item.isPriceEstimate">
           <div>
             {{item.name}} @ ${{item.price}}
             <span *ngIf="item.isPriceEstimate" class="badge badge-warning badge-pill">Estimate</span>

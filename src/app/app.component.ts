@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   shoppingList = new List();
   total = 0;
   isEditMode = false;
+  itemFilter: any = { name: '' };
 
   constructor(
     private itemService: ItemService,
@@ -70,7 +71,7 @@ export class AppComponent implements OnInit {
   getItems() {
     this.itemService
       .getAll()
-      .then(items => this.items = items);
+      .then(items => this.items = _.orderBy(items, 'name', 'asc'));
   }
 
 
