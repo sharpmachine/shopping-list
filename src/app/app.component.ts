@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
   getItems() {
     this.itemService
       .getAll()
-      .then(items => this.items = items);
+      .then(items => this.items = _.orderBy(items, 'name', 'asc'));
   }
 
 
