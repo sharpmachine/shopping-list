@@ -8,3 +8,15 @@
     margin-bottom: 0;
   }
 }
+
+.item-actions {
+  display: none;
+}
+
+.list-group-item {
+  &:hover {
+    .item-actions {
+      display: block;
+    }
+  }
+}

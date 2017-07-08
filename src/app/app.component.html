@@ -36,17 +36,17 @@
             {{item.name}} @ ${{item.price}}
             <span *ngIf="item.isPriceEstimate" class="badge badge-warning badge-pill">Estimate</span>
           </div>
-          <div>
+          <div class="item-actions">
             <button (click)="editMode(item)" class="btn btn-link">
               <i class="fa fa-pencil" aria-hidden="true"></i>
             </button>
             <button (click)="deleteItem(item); $event.stopPropagation()" class="btn btn-link">
               <i class="fa fa-trash text-danger" aria-hidden="true"></i>
             </button>
+            <button class="btn btn-link text-success" (click)="addItemToShoppingList(item)">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </button>
           </div>
-          <button class="btn btn-link text-success" (click)="addItemToShoppingList(item)">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-          </button>
         </li>
       </ul>
 
@@ -74,8 +74,6 @@
               </div>
             </div>
           </div>
-
-
 
           <button type="submit" class="btn btn-success" [disabled]="item.invalid">{{isEditMode ? 'Update' : 'Create'}} Item</button>
           <button class="btn btn-link text-danger pull-right" (click)="cancel()">Cancel</button>
