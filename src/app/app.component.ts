@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   shoppingList = new List();
   total = 0;
   isEditMode = false;
+  freshItem = { name: '', price: '', isPriceEstimate: false, quantity: 1 };
 
   constructor(
     private itemService: ItemService,
@@ -87,7 +88,7 @@ export class AppComponent implements OnInit {
     this.itemService
       .create(item)
       .then(newItem => {
-        this.item.reset();
+        this.item.reset(this.freshItem);
       }, () => {
         _.pull(this.items, item);
       });
@@ -110,7 +111,7 @@ export class AppComponent implements OnInit {
       .update(item)
       .then(updatedItem => {
         this.isEditMode = false;
-        this.item.reset();
+        this.item.reset(this.freshItem);
       }, () => {
         this.items.splice(index, 1, currentItem);
       });
