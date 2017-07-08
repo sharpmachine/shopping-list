@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
   total = 0;
   isEditMode = false;
   freshItem = { name: '', price: '', isPriceEstimate: false, quantity: 1 };
+  itemFilter: any = { name: '' };
 
   constructor(
     private itemService: ItemService,
@@ -71,7 +72,7 @@ export class AppComponent implements OnInit {
   getItems() {
     this.itemService
       .getAll()
-      .then(items => this.items = items);
+      .then(items => this.items = _.orderBy(items, 'name', 'asc'));
   }
 
 
